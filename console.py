@@ -118,35 +118,47 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        
-        class_name, *params = args.split(" ")
+
+        class_name, *parameters = args.split(" ")
 
         if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        
-        new_instance = HBNBCommand.classes[class_name]()
+        new_dictionary = {}
 
-        for param in params:
-            key, value = param.split("=")
+        for parameter in parameters:
+            key, value = parameter.split("=")
+            new_dictionary[key] = value
+        if "name" in new_dictionary:
 
-            if value.startswith('"') and value.endswith('"'):
-                value = value[1:-1]
-                value = value.replace('"','\\"').replace('_', " ")
-            elif "." in value:
-                try:
-                    value = float(value)
-                except ValueError:
-                    continue
-            else:
-                try:
-                    value = int(value)
-                except ValueError:
-                    continue
-            setattr(new_instance, key, value)
+            new_instance = HBNBCommand.classes[class_name]()
 
-        new_instance.save()
-        print(new_instance.id)
+            for parameter in parameters:
+                key, value = parameter.split("=")
+                
+                if hasattr(new_instance, key):
+                    if value.startswith('"') and value.endswith('"'):
+                        value = value[1:-1]
+                        vale = value.replace('"', r'\"').replace('_'," ")
+                    elif "." in value:
+                        if "@" not in value:
+                            try:
+                                value = float(value)
+                            except ValueError:
+                                continue
+                    else:
+                        try:
+                            value = int(value)
+                        except ValueError:
+                            continue
+                    setattr(new_instance, key, value)
+
+                    if len(parameters) > 0:
+                        new_instance.save()
+                        print(new_instance.id)
+        else:
+            print("The name field is required")
+            return
 
     def help_create(self):
         """ Help information for the create method """
