@@ -133,9 +133,9 @@ class HBNBCommand(cmd.Cmd):
             if hasattr(new_instance, key):
                 if value.startswith('"') and value.endswith('"'):
                     value = value[1:-1]
-                    vale = value.replace('"', r'\"').replace('_'," ")
+                    value = value.replace('"', r'\"').replace('_'," ")
                 elif "." in value:
-                    if value != "@":
+                    if "@" not in value:
                         try:
                             value = float(value)
                         except ValueError:
