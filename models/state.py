@@ -20,10 +20,10 @@ class State(BaseModel, Base):
     """function that calculates and returns all cities related to this intanica"""
     """The property decorator only allows access to the function as if it were just a read attribute."""
     @property
-        def cities(self):
-            new_list_cities = []
-            for city in models.storage.all('City').values():
-                if city.state_id == self.id:
-                    new_list_cities.append(city)
+    def cities(self):
+        new_list_cities = []
+        for city in models.storage.all('City').values():
+            if city.state_id == self.id:
+                new_list_cities.append(city)
 
-            return new_list_cities
+        return new_list_cities

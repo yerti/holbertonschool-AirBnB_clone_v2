@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
+import models
 from datetime import datetime
-from ssqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DateTime
 """Importing the declarative_base function"""
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -23,19 +24,17 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
+            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
+            del kwargs['__class__']
             for key, value in kwargs.items():
-                if not hasattr(self, key):
-                    setattr(self. key, value)
-                else:
+                if '__class__' not in key:
                     setattr(self, key, value)
-            if 'updated_at' in kwargs:
-                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
-            if 'created_at' in kwargs:
-                kwargs['created_at'] = datetime.strptime(kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
 
-            kwargs.pop('__class__', None)
-
-            self.__dict__.update(kwargs)
+            if not self.id:
+                self.id = str(uuid.uuid4())
 
     def __str__(self):
         """Returns a string representation of the instance"""
