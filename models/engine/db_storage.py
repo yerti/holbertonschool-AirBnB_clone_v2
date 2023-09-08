@@ -1,27 +1,40 @@
 #!/usr/bin/python3
 """This module defines a class to manage database storage for hbnb clone"""
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 import os
+from models.base_model import BaseModel
 
+
+Base = declarative_base()
+metadata = MetaData()
 
 
 class DBStorage:
-    """This class manages storage of hbnb models """
+    """This class manages databases of hbnb models """
     __engine = None
     __session = None
 
-    engine = create_engine(url='mysql+pymysql://{0}\
-                :{1}@{2}:{3}/{4}'.format(os.environ['HBNB_MYSQL_USER'],
-                    os.environ['HBNB_MYSQL_PWD'],
-                    os.environ['HBNB_MYSQL_HOST'], 3306,
-                    os.environ['HBNB_MYSQL_DB']), pool_pre_ping=True)
+    user = os.getenv('HBNB_MYSQL_USER')
+    password = os.getenv('HBNB_MYSQL_PWD')
+    host = os.getenv('HBNB_MYSQL_HOST')
+    database = os.getenv('HBNB_MYSQL_DB')
 
     def __init__(self):
-        ''' Create the engine  '''
-        self.__engine = engine
-    
+        ''' Connect the file to the database '''
+        self.__engine = create_engine(url='mysql+mysqldb://{0}:{1}@{2}:{3}/{4}'.
+                format(self.user, self.password, self.host, 3306,self.database),
+                pool_pre_ping=True)
+        
+        Session = sessionmaker(bind=self.__engine)
+        session = Session()
+
+        if os.getenv('HBNB_ENV') == 'test':
+            ''' Drop all tables if variable HBNB_ENV is equal to test '''
+            Base.metadata.drop_all(self.__engine)
+        Base.metadata.create_all(self.__engine)
 
     def all(self, cls=None):
         """Returns a list of all objects, optionally filtered by class."""
@@ -40,6 +53,7 @@ class DBStorage:
 
     def save(self):
         """Saves database dictionary"""
+        self.session.commit()
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -50,10 +64,11 @@ class DBStorage:
         from models.city import City
         from models.amenity import Amenity
         from models.review import Review
-
+        
+        Base.metadata.create_all(self.__engine) 
 
 
     def delete(self, obj=None):
         """Remove object from __objects if it exists."""
         if obj is not None:
-            new_key = f"{str(obj.__class__.__name__)}.{obj.id}"
+            self.__session.delete(obj)
