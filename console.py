@@ -134,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
             if hasattr(new_instance, key):
                 if value.startswith('"') and value.endswith('"'):
                     value = value[1:-1]
-                    value = value.replace('"', r'\"').replace('_'," ")
+                    value = value.replace('"', r'\"').replace('_', " ")
                 elif "." in value:
                     if "@" not in value:
                         try:
@@ -230,7 +230,7 @@ class HBNBCommand(cmd.Cmd):
             store = storage.all(eval(args))
         else:
             store = storage._FileStorage__objects
-        
+
         if args:
             args = args.split(' ')[0]
             if args not in HBNBCommand.classes:
@@ -349,6 +349,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
