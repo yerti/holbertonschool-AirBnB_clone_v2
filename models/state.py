@@ -17,8 +17,10 @@ class State(BaseModel, Base):
     else:
         name = ""
 
-    """function that calculates and returns all cities related to this intanica"""
-    """The property decorator only allows access to the function as if it were just a read attribute."""
+    """function that calculates and returns all cities
+    related to this intanica"""
+    """The property decorator only allows access
+    to the function as if it were just a read attribute."""
     @property
     def cities(self):
         new_list_cities = []
