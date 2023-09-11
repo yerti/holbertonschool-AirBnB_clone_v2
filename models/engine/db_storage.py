@@ -19,14 +19,13 @@ class DBStorage:
     __engine = None
     __session = None
 
-
     def __init__(self):
         ''' Connect the motor of the database '''
         user = getenv('HBNB_MYSQL_USER')
         password = getenv('HBNB_MYSQL_PWD')
         host = getenv('HBNB_MYSQL_HOST')
         database = getenv('HBNB_MYSQL_DB')
-        
+
         self.__engine = create_engine(
                 f"mysql+mysqldb://{user}:{password}@{host}/{database}",
                 pool_pre_ping=True)
@@ -53,20 +52,19 @@ class DBStorage:
     def new(self, obj):
         """Adds new object to dbstorage dictionary"""
         self.__session.add(obj)
-    
+
     def save(self):
         """Saves database dictionary"""
         self.__session.commit()
 
-
     def delete(self, obj=None):
         """Remove object from __objects if it exists."""
-        if obj is not None:
-           self.__sesion.delete(obj)
+    if obj is not None:
+        self.__sesion.delete(obj)
 
     def reload(self):
         """Loads storage dictionary from file"""
-        
+
         Base.metadata.create_all(self.__engine)
         session_db = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_db)
