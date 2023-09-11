@@ -59,8 +59,8 @@ class DBStorage:
 
     def delete(self, obj=None):
         """Remove object from __objects if it exists."""
-    if obj is not None:
-        self.__sesion.delete(obj)
+        if obj is not None:
+            self.__sesion.delete(obj)
 
     def reload(self):
         """Loads storage dictionary from file"""
