@@ -13,18 +13,19 @@ import models
 
 class testConsole(unittest.TestCase):
     ''' Unittests to test the console '''
-    
+
     def test_emptyline(self):
         ''' Test empty line '''
         with patch('sys.stdout', new=StringIO()) as f:
             self.HBNB.onecmd("\n")
-            sekf,assertEqual('', f.getvalue())
+            self.assertEqual('', f.getvalue())
 
     def test_quit(self):
         """Test quit command """
         with patch("sys.stdout", new=StringIO()) as f:
             self.HBNB.onecmd("quit")
             self.assertEqual('', f.getvalue())
+
 
 if __name__ == '__main__':
     unittest.main()
