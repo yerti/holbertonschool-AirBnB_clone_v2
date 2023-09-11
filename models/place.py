@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from models.review import Review
 
+
 class Place(BaseModel, Base):
 
     __tablename__ = 'places'
@@ -23,9 +24,10 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
-    
+
     if getenv('HBNB_TYPE_STORAGE') == 'db':
-        reviews = relationship('Review', backref='place', cascade='all, delete')
+        review = 'Review'
+        reviews = relationship(review, backref='place', cascade='all, delete')
     else:
         ''' relationship with file storage '''
         @property
@@ -36,4 +38,3 @@ class Place(BaseModel, Base):
                 if review.place_id == self.id:
                     view_list.append(review)
             return view_list
-
