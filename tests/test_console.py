@@ -2,11 +2,12 @@
 '''
     Test Case for the console
 '''
-import unnitest
+import unittest
 from unittest.mock import patch
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
+from console import HBNBCommand
 import models
 
 
