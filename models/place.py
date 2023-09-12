@@ -20,7 +20,6 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
                             primary_key=True,
                             nullable=False))
 
-
     class Place(BaseModel, Base):
         __tablename__ = 'places'
 
@@ -38,9 +37,12 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
         amenity_ids = []
         review = 'Review'
         reviews = relationship(review, backref='place', cascade='all, delete')
-        amenities = relationship("Amenity", secondary=place_amenity,
-                                back_populates="place_amenities",
-                                viewonly=False)
+        rlt = relationship
+        amnt = 'Amenity'
+        p_a = place_amenity
+        pstr = "place_amenities"
+        f = False
+        amenities = rlt(amnt, secondary=p_a, back_populates=pstr, viewonly=f)
 else:
     class Place(BaseModel):
 
@@ -71,8 +73,8 @@ else:
         def amenities(self):
             from models.review import Amenity
             amens = storage.all(Amenity)
-            list_amens = [amen for amen in amens.values()
-                        if amen.id in amenity_ids]
+            ids = amenity_ids
+            list_amens = [amen for amen in amens.values() if amen.id in ids]
             return list_amens
 
         @amenities.setter

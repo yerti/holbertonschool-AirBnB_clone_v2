@@ -6,15 +6,15 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
+if getenv('HBNB_TYPE_STORAGE') == 'db':
+    class City(BaseModel, Base):
+        """ The city class, contains state ID and name """
+        __tablename__ = 'cities'
 
-class City(BaseModel, Base):
-    """ The city class, contains state ID and name """
-    __tablename__ = 'cities'
-
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
         name = Column(String(128), nullable=False)
         place = relationship('Place', backref='cities')
-    else:
+else:
+    class City(BaseModel):
         name = ''
         state_id = ''
