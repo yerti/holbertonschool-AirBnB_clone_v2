@@ -1,30 +1,32 @@
 #!/usr/bin/python3
 """ """
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
+from models.engine.db_storage import DBStorage
+from models.engine.file_storage import FileStorage
 import unittest
-import datetime
+from datetime import datetime
 from uuid import UUID
 import json
 import os
 
 
-class test_basemodel(unittest.TestCase):
+class TestBaseModel(unittest.TestCase):
     """ """
 
-    def __init__(self, *args, **kwargs):
+    def test__init__(self, *args, **kwargs):
         """ """
         super().__init__(*args, **kwargs)
         self.name = 'BaseModel'
         self.value = BaseModel
 
-    def setUp(self):
+    def test_setUp(self):
         """ """
         pass
 
-    def tearDown(self):
+    def test_tearDown(self):
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_default(self):

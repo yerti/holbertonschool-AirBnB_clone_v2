@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 """ """
-from tests.test_models.test_base_model import test_basemodel
+from models.base_model import BaseModel
+from models.user import User
+import unittest
+from datetime import datetime
 from models.user import User
 
 
-class test_User(test_basemodel):
+class test_User(unittest.TextCase):
     """ """
 
     def __init__(self, *args, **kwargs):

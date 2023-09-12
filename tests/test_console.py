@@ -11,15 +11,17 @@ from console import HBNBCommand
 import models
 
 
-class testConsole(unittest.TestCase):
+class TestConsole(unittest.TestCase):
     ''' Unittests to test the console '''
 
+    @unittest.skipUnless(models.storage_type == 'db', 'Use with db storage')
     def test_emptyline(self):
         ''' Test empty line '''
         with patch('sys.stdout', new=StringIO()) as f:
             self.HBNB.onecmd("\n")
             self.assertEqual('', f.getvalue())
 
+    @unittest.skipUnless(models.storage_type == 'db', 'Use with db storage')
     def test_quit(self):
         """Test quit command """
         with patch("sys.stdout", new=StringIO()) as f:

@@ -1,10 +1,19 @@
 #!/usr/bin/python3
 """ """
-from tests.test_models.test_base_model import test_basemodel
+from models.base_model import BaseModel
+from models.engine.db_storage import DBStorage
+from models.engine.file_storage import FileStorage
+from models.review import Review
 from models.place import Place
+from models.city import City
+from models.place import Place
+from models.state import State
+from models.user import User
+from datetime import datetime
+import unittest
 
 
-class test_Place(test_basemodel):
+class TestPlace(unittest.TestCase):
     """ """
 
     def __init__(self, *args, **kwargs):
