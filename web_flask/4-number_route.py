@@ -33,12 +33,12 @@ def python_text(text='is cool'):
     return f"Python {new_text}"
 
 
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def is_number(n):
-    if n.isdigit():
-        return f"{n} is a number"
+    if isinstance(n, int):
+        return "{} is a number".format(n)
     else:
-        abort(404)
+        return "Not Found", 404
 
 
 if __name__ == '__main__':
