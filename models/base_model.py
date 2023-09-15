@@ -43,8 +43,8 @@ class BaseModel:
                 for key, value in kwargs.items():
                     if "__class__" not in key:
                         setattr(self, key, value)
-                if not self.id:
-                    self.id = str(uuid.uuid4())
+
+                self.id = str(uuid.uuid4())
 
     def __str__(self):
         """Returns a string representation of the instance"""
