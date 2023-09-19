@@ -74,6 +74,21 @@
     position: absolute;
     z-index: 1;
     height: 300px;
+    width: 141px;
+    overflow: auto;
+}
+.first-ul-popover {
+    margin-left: -12px;
+    margin-top: 25px;
+}
+.second-ul-popover {
+    margin-left:  -8px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+.filters .popover::-webkit-scrollbar {
+    display: none;
 }
 
 /* Styles for dropdown menus so they appear when you hover over them */
@@ -107,7 +122,8 @@
     line-height: 0px;
 }
 /* Styles for the unordered list of the popover class that is a child of ameneties */
-.amenities .popover ul {
-    margin: 24px 0px;
-    padding-right: 40px;
+
+.popover .third-ul-popover {
+    margin-top: 24px;
+    margin-left: -65px;
 }
