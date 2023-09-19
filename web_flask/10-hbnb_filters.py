@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """script that starts a Flask web application"""
 from flask import Flask, render_template
-from models import *
+from models.state import State
+from models.amenity import Amenity
 from models import storage
 
 
@@ -13,10 +14,10 @@ def filters():
     """
     display a HTML page: (inside the tag BODY)
     """
-    states = storage.all("State").values()
-    amenities = storage.all("Amenity").values()
-    return render_template('10-hbhb_filters.html', states=states,
-                           amenities=amenities)
+    states = storage.all(State).values()
+    sorted_states = sorted(states, key=lambda state: state.name)
+    amenities = storage.all(Amenity).values()
+    return render_template('10-hbnb_filters.html', states=sorted_states,amenities=amenities)
 
 
 @app.teardown_appcontext
